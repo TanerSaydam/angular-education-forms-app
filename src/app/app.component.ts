@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  template:"<app-ng-forms></app-ng-forms>"
 })
 export class AppComponent {
   title = 'forms-app';

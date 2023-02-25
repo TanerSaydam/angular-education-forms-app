@@ -1,0 +1,135 @@
+<div class="container">    
+    <div class="d-flex justify-content-center">
+    <!-- Add Form -->
+    <div class="col-md-4" *ngIf="!isUpdateFormActive">
+        <h1>Ekleme Formu</h1>
+        <form [formGroup]="addForm" (ngSubmit)="add()" autocomplete="off">
+            <div class="from-group">
+                <label for="firstName">Adınız *</label>
+                <input                               
+                  type="text"
+                  [(ngModel)]="person.firstName"
+                  name="firstName"
+                  formControlName="firstName"
+                  [class]="changeInputClassForValidation(addForm.controls['firstName'])"
+                  id="firstName">
+                <div class="invalid-feedback">
+                    Firstname kısmı boş olamaz!
+                </div>
+            </div>
+            <div class="from-group mt-1">
+                <label for="lastName">Soyadınız</label>
+                <input
+                  type="text"
+                  [(ngModel)]="person.lastName"
+                  name="lastName"
+                  formControlName="lastName"
+                  [class]="changeInputClassForValidation(addForm.controls['lastName'])"
+                  id="lastName">
+                <div class="invalid-feedback">
+                    Lastname kısmı boş olamaz!
+                </div>
+            </div>
+            <div class="from-group mt-1">
+                <label for="email">Mail Adresiniz</label>
+               <input
+                  type="email"
+                  [(ngModel)]="person.email"
+                  name="lastName"
+                  formControlName="email"
+                  [class]="changeInputClassForValidation(addForm.controls['email'])"
+                  id="email">
+                <div class="invalid-feedback">
+                    Email kısmı boş olamaz!
+                </div>
+            </div>
+            <div formGroupName="address">
+                <div class="from-group mt-1">
+                    <label for="street">Cade Adı</label>
+                    <input type="text" [(ngModel)]="person.address.street" name="street" formControlName="street" class="form-control" id="street">
+                </div>
+                <div class="from-group mt-1">
+                    <label for="city">Şehir Adı</label>
+                    <input type="text" [(ngModel)]="person.address.city" name="city" formControlName="city" class="form-control" id="city">
+                </div>
+            </div>
+            <div class="form-group mt-1">
+                <button type="submit" class="btn btn-outline-primary w-100" [disabled]="!addForm.valid">Kaydet</button>
+            </div>
+        </form>        
+    </div>
+
+    <!-- Update Form -->
+    <div class="col-md-4" *ngIf="isUpdateFormActive">
+        <h1>Update Formu</h1>
+        <form [formGroup]="updateForm" (ngSubmit)="update()">
+            <div class="from-group">
+                <label for="firstName">Adınız</label>
+                <input                  
+                  type="text"
+                  [(ngModel)]="updatePerson.firstName"
+                  name="firstName"
+                  formControlName="firstName"
+                  class="form-control"
+                  id="firstName">
+            </div>
+            <div class="from-group mt-1">
+                <label for="lastName">Soyadınız</label>
+                <input type="text" [(ngModel)]="updatePerson.lastName" name="lastName" formControlName="lastName" class="form-control" id="lastName">
+            </div>
+            <div class="from-group mt-1">
+                <label for="email">Mail Adresiniz</label>
+                <input type="email" [(ngModel)]="updatePerson.email" name="lastName" formControlName="email" class="form-control" id="email">
+            </div>
+            <div formGroupName="address">
+                <div class="from-group mt-1">
+                    <label for="street">Cade Adı</label>
+                    <input type="text" [(ngModel)]="updatePerson.address.street" name="street" formControlName="street" class="form-control" id="street">
+                </div>
+                <div class="from-group mt-1">
+                    <label for="city">Şehir Adı</label>
+                    <input type="text" [(ngModel)]="updatePerson.address.city" name="city" formControlName="city" class="form-control" id="city">
+                </div>
+            </div>
+            <div class="form-group mt-1">
+                <button type="submit" class="btn btn-outline-warning w-100" [disabled]="!updateForm.valid">Güncelle</button>
+                <button type="button" (click)="cancel()" class="btn btn-outline-danger mt-1 w-100">Vazgeç</button>
+            </div>
+        </form>        
+    </div>
+</div>
+    <hr>
+
+    <div class="form-group mt-1">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Adress</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let p of persons let i = index">
+                    <td>{{i + 1}}</td>
+                    <td>{{p.firstName}}</td>
+                    <td>{{p.lastName}}</td>
+                    <td>{{p.email}}</td>
+                    <td>
+                        <ul>
+                            <li>Cadde: {{p.address.street}}</li>
+                            <li>Cadde: {{p.address.city}}</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <button class="btn btn-outline-warning btn-sm" (click)="get(p,i)">Güncelle</button>
+                        <button (click)="delete(i)" class="btn btn-outline-danger mx-1 btn-sm">Sil</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,121 @@
+<div class="container">
+    <div class="d-flex justify-content-center">
+        <!-- Ekleme Formu -->
+        <div class="col-md-4">
+            <form #addForm="ngForm" (ngSubmit)="add(addForm)">
+                <div class="form-group">
+                    <label for="firstName">FirstName</label>
+                    <input
+                      [(ngModel)]="addPerson.firstName"
+                      name="firstName"
+                      type="text"
+                      id="firstName"
+                      required
+                      #firstName
+                      minlength="3"
+                      [class]="changeInputClassForValidation(addForm.controls['firstName'])">
+                      <div class="invalid-feedback">
+                        Firstname kısmı boş olamaz!
+                    </div>
+                </div>
+                <div class="form-group mt-1">
+                    <label for="lastName">LastName</label>
+                    <input
+                    [(ngModel)]="addPerson.lastName"
+                      name="lastName"
+                      type="text"
+                      id="lastName"
+                      #lastName
+                      required
+                      minlength="3"
+                      [class]="changeInputClassForValidation(addForm.controls['lastName'])">
+                      <div class="invalid-feedback">
+                        Lastname kısmı boş olamaz!
+                    </div>
+                </div>
+                <div class="form-group mt-1">
+                    <label for="email">Email</label>
+                    <input
+                    [(ngModel)]="addPerson.email"
+                      name="email"
+                      type="email"
+                      id="email"
+                      required
+                      email
+                      #email
+                      minlength="3"
+                      class="form-control"
+                      [class]="changeInputClassForValidation(addForm.controls['email'])">
+                      <div class="invalid-feedback">
+                        Email kısmı boş olamaz!
+                    </div>
+                </div>
+                <div class="form-group mt-1">
+                    <label for="street">Street</label>
+                    <input
+                      [(ngModel)]="addPerson.address.street"
+                      name="street"
+                      type="text"
+                      id="street"
+                      class="form-control">
+                </div>
+                <div class="form-group mt-1">
+                    <label for="city">City</label>
+                   <select
+                      name="city"
+                      id="city"
+                      [(ngModel)]="addPerson.address.city"
+                      #city
+                      required
+                      minlength="3"
+                      [class]="changeInputClassForValidation(addForm.controls['city'])"
+                      >
+                        <option value="0">Seçim Yapınız...</option>
+                        <option>Kayseri</option>
+                        <option>İstanbul</option>
+                        <option>İzmir</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Şehir kısmı boş olamaz!
+                    </div>
+                </div>
+                <div class="form-group mt-1">
+                    <button class="btn btn-outline-primary w-100" [disabled]="!addForm.valid">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <hr>
+    <div class="form-group mt-1">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Adress</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let p of persons let i = index">
+                    <td>{{i + 1}}</td>
+                    <td>{{p.firstName}}</td>
+                    <td>{{p.lastName}}</td>
+                    <td>{{p.email}}</td>
+                    <td>
+                        <ul>
+                            <li>Cadde: {{p.address.street}}</li>
+                            <li>Cadde: {{p.address.city}}</li>
+                        </ul>
+                    </td>
+                    <td>
+                        <button class="btn btn-outline-warning btn-sm" (click)="get(p,i)">Güncelle</button>
+                        <button (click)="delete(i)" class="btn btn-outline-danger mx-1 btn-sm">Sil</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
